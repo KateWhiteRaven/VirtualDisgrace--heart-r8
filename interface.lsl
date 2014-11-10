@@ -15,6 +15,9 @@ vector YELLOW=<1.0,1.0,0.0>;
 vector ORANGE=<0.8,0.4,0.0>;
 vector VIOLET=<1.0,0.0,1.0>;
 vector DARK_VIOLET=<0.3,0.0,0.3>;
+vector BLANK=<1.0,1.0,1.0>;
+vector GREY=<0.5,0.5,0.5>;
+vector BLUE=<0.0,0.5,1.0>;
 //integer DEBUG=1; //Uncomment this and all //if(DEBUG) lines to debug
 
 // Variables
@@ -83,7 +86,7 @@ init()
         if(lastSlot!=slot)
         {
             lastSlot=slot;
-            llSetRot(llEuler2Rot(<0.0,270.0,260.0>*DEG_TO_RAD));
+            //llSetRot(llEuler2Rot(<0.0,270.0,260.0>*DEG_TO_RAD));
             if(slot==ATTACH_HUD_CENTER_2) llSetPos(<0.0,0.0,0.0>);
             else if(slot==ATTACH_HUD_TOP_RIGHT) llSetPos(<0.0,0.15,-0.15>);
             else if(slot==ATTACH_HUD_TOP_CENTER) llSetPos(<0.0,0.0,-0.15>);
@@ -146,8 +149,8 @@ post()
     else setMode(3);
     if(primL1) llSetLinkColor(primL1,GREEN,ALL_SIDES);
     if(primYes) llSetLinkColor(primYes,GREEN,ALL_SIDES);
-    llSetLinkColor(primRoot,YELLOW,ALL_SIDES);
-    if(primAAL) llSetLinkColor(primAAL,RED,ALL_SIDES);
+    llSetLinkColor(primRoot,BLUE,ALL_SIDES);
+    if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
     llSleep(0.1);
     if(primL2) llSetLinkColor(primL2,GREEN,ALL_SIDES);
     if(primNo) llSetLinkColor(primNo,RED,ALL_SIDES);
@@ -159,10 +162,10 @@ post()
     if(primQueue) llSetLinkColor(primQueue,DARK_VIOLET,ALL_SIDES);
     llSleep(0.1);
     if(primL2) llSetLinkColor(primL2,DARK_GREEN,ALL_SIDES);
-    if(primNo) llSetLinkColor(primNo,DARK_RED,ALL_SIDES);
+    if(primNo) llSetLinkColor(primNo,BLANK,ALL_SIDES);
     llSleep(0.1);
     if(primL1) llSetLinkColor(primL1,DARK_GREEN,ALL_SIDES);
-    if(primYes) llSetLinkColor(primYes,DARK_GREEN,ALL_SIDES);
+    if(primYes) llSetLinkColor(primYes,BLANK,ALL_SIDES);
     if(primLockout)
     {
         if(!lockoutTimer || !power) llSetLinkColor(primLockout,DARK_RED,ALL_SIDES);
@@ -174,19 +177,19 @@ post()
     }
     if(!power)
     {
-        if(primMode) llSetLinkColor(primMode,DARK_RED,ALL_SIDES);
-        llSetLinkColor(primRoot,DARK_GREEN,ALL_SIDES);
-        if(primSafety) llSetLinkColor(primSafety,DARK_RED,ALL_SIDES);
+        if(primMode) llSetLinkTexture(primMode,"269545d5-5691-b916-18ff-b0248d2ae39f",ALL_SIDES);
+        llSetLinkColor(primRoot,BLANK,ALL_SIDES);
+        if(primSafety) llSetLinkColor(primSafety,BLANK,ALL_SIDES);
     }
-    else if(warningMode==1) llSetLinkColor(primRoot,YELLOW,ALL_SIDES);
-    else llSetLinkColor(primRoot,GREEN,ALL_SIDES);
+    else if(warningMode==1) llSetLinkColor(primRoot,BLUE,ALL_SIDES);
+    else llSetLinkColor(primRoot,BLANK,ALL_SIDES);
     if(attachmentsLocked)
     {
-        if(primAAL) llSetLinkColor(primAAL,RED,ALL_SIDES);
+        if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
     }
     else
     {
-        if(primAAL) llSetLinkColor(primAAL,DARK_RED,ALL_SIDES);
+        if(primAAL) llSetLinkTexture(primAAL,"382ae69b-1ee2-3073-e54e-00354d71fe05",ALL_SIDES);
     }
     lockoutObjects=NULL_LIST;
 }
@@ -204,10 +207,10 @@ askSafety(key ids)
 }
 closeAsking()
 {
-    llSetLinkColor(primYes,DARK_GREEN,ALL_SIDES);
-    llSetLinkColor(primNo,DARK_RED,ALL_SIDES);
+    llSetLinkColor(primYes,BLANK,ALL_SIDES);
+    llSetLinkColor(primNo,BLANK,ALL_SIDES);
     llSetLinkColor(primQueue,DARK_VIOLET,ALL_SIDES);
-    llSetLinkColor(primRoot,GREEN,ALL_SIDES);
+    llSetLinkColor(primRoot,BLANK,ALL_SIDES);
     asking=0;
     askingKey=NULL;
 }
@@ -216,23 +219,23 @@ setMode(integer newMode)
     if(newMode>3) newMode=0;
     if(!newMode)
     {
-        llSetLinkColor(primMode,GREEN,ALL_SIDES);
+        llSetLinkTexture(primMode,"80741de3-c2a8-03ac-40a8-0801f92ca251",ALL_SIDES);
         llOwnerSay("Ask Mode");
     }
     else if(newMode==1)
     {
-        llSetLinkColor(primMode,YELLOW,ALL_SIDES);
-        llOwnerSay("Semi Auto Mode (Auto Force, Ask Restrictions)");
+        llSetLinkTexture(primMode,"6046abf0-9460-ad32-64ae-69f852680924",ALL_SIDES);
+        llOwnerSay("Lite Mode\n\n(Auto Force, Ask Restrictions)\n");
     }
     else if(newMode==2)
     {
-        llSetLinkColor(primMode,ORANGE,ALL_SIDES);
-        llOwnerSay("Auto Mode (With Blacklist)");
+        llSetLinkTexture(primMode,"adc2cd56-d422-47c9-7d11-3bb601f9dfcf",ALL_SIDES);
+        llOwnerSay("Auto Mode\n\n(With Blacklist)\n");
     }
     else if(newMode==3)
     {
-        llSetLinkColor(primMode,RED,ALL_SIDES);
-        llOwnerSay(" /!\\ Full Auto Mode (NO Blacklist) /!\\ ");
+        llSetLinkTexture(primMode,"f32086f6-8c84-55db-dbe2-0fb782b6cad7",ALL_SIDES);
+        llOwnerSay("⚠ Risky Mode ⚠\n\n(NO Blacklist)\n");
     }
     relayMode=newMode;
     llMessageLinked(LINK_ALL_OTHERS,relayMode,"SetMode",NULL);
@@ -245,8 +248,8 @@ setSafetyColor()
 {
     if(primSafety)
     {
-        if(superSafety) llSetLinkColor(primSafety,ORANGE,ALL_SIDES);
-        else llSetLinkColor(primSafety,DARK_RED,ALL_SIDES);
+        if(superSafety) llSetLinkColor(primSafety,GREEN,ALL_SIDES);
+        else llSetLinkColor(primSafety,BLANK,ALL_SIDES);
     }
 }
 lockAttachments()
@@ -261,7 +264,7 @@ lockAttachments()
     {
         llOwnerSay(llList2String(clothingLockList,x));
     }
-    if(primAAL) llSetLinkColor(primAAL,RED,ALL_SIDES);
+    if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
     attachmentsLocked=1;
 }
 unlockAttachments()
@@ -269,7 +272,7 @@ unlockAttachments()
     llOwnerSay("@clear=remattach");
     llOwnerSay("@clear=remoutfit");
     llMessageLinked(LINK_ALL_OTHERS,0,"Refresh",WILDCARD);
-    if(primAAL) llSetLinkColor(primAAL,DARK_RED,ALL_SIDES);
+    if(primAAL) llSetLinkTexture(primAAL,"382ae69b-1ee2-3073-e54e-00354d71fe05",ALL_SIDES);
     attachmentsLocked=0;
     attachmentLockList=NULL_LIST;
     clothingLockList=NULL_LIST;
@@ -298,7 +301,7 @@ activateSafety() //Activates the Safety System
         else
         {
             timeout=30;
-            if(primSafety) llSetLinkColor(primSafety,YELLOW,ALL_SIDES);
+            if(primSafety) llSetLinkColor(primSafety,BLUE,ALL_SIDES);
             llSensor("","",AGENT,20.0,PI);
         }
     }
@@ -362,15 +365,15 @@ default
             if(primL1) llSetLinkColor(primL1,DARK_GREEN,ALL_SIDES);
             if(primL2) llSetLinkColor(primL2,DARK_GREEN,ALL_SIDES);
             if(primL3) llSetLinkColor(primL3,DARK_RED,ALL_SIDES);
-            if(primSafety) llSetLinkColor(primSafety,DARK_RED,ALL_SIDES);
-            if(primMode) llSetLinkColor(primMode,DARK_RED,ALL_SIDES);
-            if(primYes) llSetLinkColor(primYes,DARK_GREEN,ALL_SIDES);
-            if(primNo) llSetLinkColor(primNo,DARK_RED,ALL_SIDES);
+            if(primSafety) llSetLinkColor(primSafety,BLANK,ALL_SIDES);
+            if(primMode) llSetLinkTexture(primMode,"269545d5-5691-b916-18ff-b0248d2ae39f",ALL_SIDES);
+            if(primYes) llSetLinkColor(primYes,BLANK,ALL_SIDES);
+            if(primNo) llSetLinkColor(primNo,BLANK,ALL_SIDES);
             if(primLockout) llSetLinkColor(primLockout,DARK_RED,ALL_SIDES);
             buttonHeld=0;
             holdTimeout=0;
             if(attachmentsLocked) unlockAttachments();
-            llSetLinkColor(primRoot,DARK_GREEN,ALL_SIDES);
+            llSetLinkColor(primRoot,BLANK,ALL_SIDES);
         }
         else if(message=="POST")
         {
@@ -387,11 +390,11 @@ default
         }
         else if(message=="Flash")
         {
-            if(power) llSetLinkColor(primRoot,GREEN,ALL_SIDES);
+            if(power) llSetLinkColor(primRoot,BLANK,ALL_SIDES);
             flashTimeout=2;
-            if(controllerCount>0 && primL1) llSetLinkColor(primL1,YELLOW,ALL_SIDES);
-            if(controllerCount>1 && primL2) llSetLinkColor(primL2,YELLOW,ALL_SIDES);
-            if(controllerCount>2 && primL3) llSetLinkColor(primL3,YELLOW,ALL_SIDES);
+            if(controllerCount>0 && primL1) llSetLinkColor(primL1,BLUE,ALL_SIDES);
+            if(controllerCount>1 && primL2) llSetLinkColor(primL2,BLUE,ALL_SIDES);
+            if(controllerCount>2 && primL3) llSetLinkColor(primL3,BLUE,ALL_SIDES);
         }
         else if(message=="Asking")
         {
@@ -406,7 +409,7 @@ default
                         llSetLinkColor(primYes,GREEN,ALL_SIDES);
                         llSetLinkColor(primNo,RED,ALL_SIDES);
                         if(primQueue) llSetLinkColor(primQueue,VIOLET,ALL_SIDES);
-                        llSetLinkColor(primRoot,YELLOW,ALL_SIDES);
+                        llSetLinkColor(primRoot,BLUE,ALL_SIDES);
                         asking=1;
                     }
                 }
@@ -429,12 +432,12 @@ default
         else if(message=="Normal")
         {
             warningMode=0;
-            llSetLinkColor(primRoot,GREEN,ALL_SIDES);
+            llSetLinkColor(primRoot,BLANK,ALL_SIDES);
         }
         else if(message=="Warning")
         {
             warningMode=1;
-            llSetLinkColor(primRoot,YELLOW,ALL_SIDES);
+            llSetLinkColor(primRoot,BLUE,ALL_SIDES);
         }
         else if(message=="Detach")
         {
@@ -617,7 +620,7 @@ default
                     {
                         holdTimeout=4;
                         buttonHeld=primLockout;
-                        llSetLinkColor(primLockout,YELLOW,ALL_SIDES);
+                        llSetLinkColor(primLockout,BLUE,ALL_SIDES);
                     }
                     else if(!controllerCount)
                     {
@@ -637,7 +640,7 @@ default
                     else
                     {
                         attachmentStage=1;
-                        llSetLinkColor(primAAL,YELLOW,ALL_SIDES);
+                        //llSetLinkColor(primAAL,YELLOW,ALL_SIDES);
                         attachmentListener=llListen(11215311,"",ownerKey,"");
                         llOwnerSay("@getattach=11215311");
                         attachmentTimeout=10;
@@ -667,7 +670,7 @@ default
             {
                 holdTimeout=4;
                 buttonHeld=primRoot;
-                llSetLinkColor(primRoot,YELLOW,ALL_SIDES);
+                llSetLinkColor(primRoot,BLUE,ALL_SIDES);
             }
         }
         else if(llDetectedLinkNumber(0)==primRoot)
@@ -716,7 +719,7 @@ default
             }
             else if(buttonHeld==primRoot)
             {
-                if(power) llSetLinkColor(primRoot,GREEN,ALL_SIDES);
+                if(power) llSetLinkColor(primRoot,BLANK,ALL_SIDES);
                 if(controllerCount)
                 {
                     llOwnerSay("Interface Memory Usage: "+(string)(llGetUsedMemory()/1024)+"kb");
@@ -769,7 +772,7 @@ default
                 llOwnerSay("Attachments Locked On");
                 //llOwnerSay("memory Used: "+(string)(llGetUsedMemory()/1024)+"kb");
                 attachmentStage=0;
-                if(primAAL) llSetLinkColor(primAAL,RED,ALL_SIDES);
+                if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
             }
             else if(attachmentStage==1)
             {
