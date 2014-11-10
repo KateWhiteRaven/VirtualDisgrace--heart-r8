@@ -140,7 +140,7 @@ post()
         else if(llGetLinkName(x)=="No") primNo=x;
         else if(llGetLinkName(x)=="Lockout") primLockout=x;
         else if(llGetLinkName(x)=="AAL") primAAL=x;
-        else if(llGetLinkName(x)=="Turbo Safety Menu") primQueue=x;
+        else if(llGetLinkName(x)=="Relay Menu") primQueue=x;
         else if(llGetLinkName(x)=="Relay") primRelay=x;
     }
     if(primLockout) llSetLinkColor(primLockout,RED,ALL_SIDES);

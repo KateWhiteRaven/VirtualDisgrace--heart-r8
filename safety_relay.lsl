@@ -34,8 +34,8 @@ string CLEAR_ALL="@clear,detach=n,setdebug_renderresolutiondivisor:1=force";
 string CLEAR_DEBUG_RENDER="@setdebug_renderresolutiondivisor:1=force";
 string CLEAR_ENV="@setenv_daytime:-1=force";
 string FORCE_UNSIT="@unsit=force";
-vector RED=<1.0,0.0,0.0>; //Speeds up the busy light operation greatly
-vector DARK_RED=<0.3,0.0,0.0>;
+vector BLUE=<0.0,0.5,1.0>; //Speeds up the busy light operation greatly
+vector DARK_BLUE=<0.0,0.11,0.22>;
 
 // Variables
 
@@ -97,17 +97,17 @@ setPrims() //For setting the linked script prims
         if(llGetLinkName(v)=="Indicator") primIndicator=v;
 //        else if(llGetLinkName(v)=="ORG Extensions") primORG=v;
 //        else if(llGetLinkName(v)=="Email Indicator") primEmail=v;
-        else if(llGetLinkName(v)=="Turbo Safety Menu") primQueue=v;
+        else if(llGetLinkName(v)=="Relay Menu") primQueue=v;
     }
     if(!primQueue) relayMode=3;
 }
 busyOn()
 {
-    if(primIndicator) llSetLinkColor(primIndicator,RED,ALL_SIDES);
+    if(primIndicator) llSetLinkColor(primIndicator,BLUE,ALL_SIDES);
 }
 busyOff()
 {
-    if(primIndicator) llSetLinkColor(primIndicator,DARK_RED,ALL_SIDES);
+    if(primIndicator) llSetLinkColor(primIndicator,DARK_BLUE,ALL_SIDES);
 }
 initVars() //Should not need this, but for some reason, it
 {          //is needed for null checks, so it gets used when
