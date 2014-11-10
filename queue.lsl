@@ -8,12 +8,13 @@
 
 key WILDCARD="ffffffff-ffff-ffff-ffff-ffffffffffff"; // We use WILDCARD key for global clearing
 list ORG_PARSE=["/"]; // Also to speed up list parsing, since inline created lists are process intensive to a degree
-list EQUALS_PARSE=["="]; // For Semi Auto Mode
+list EQUALS_PARSE=["="]; // For Lite Mode
 list NULL_LIST=[]; // Speeds up list emptying and empty list checking
 integer MEMORY_LIMIT=61439; //Fine-tune to prevent Stackheap
 integer PIN=-5875279; // Auto updater PIN (WIP)
 list RLV_PARSE=["|"]; // Speeds up Parsing a little
 key MESSAGE="Message";
+string MANPAGE="[http://www.virtualdisgrace.com/relay Virtual Disgrace - Relay]";
 //integer DEBUG=1; // Uncomment this and all //if(DEBUG) lines to enable debugging
 
 // Variables
@@ -44,7 +45,7 @@ integer listPage;
 integer primRelay;
 //integer primORG;
 integer startupMemory;
-integer relayMode; //For Changing Between Ask, Auto, and Full Auto modes
+integer relayMode; //For Changing Between Ask, Auto, and Risky modes
 integer power=1;
 key permittedObject;
 key rejectedObject;
@@ -144,41 +145,41 @@ doMenu()
     menuTimeout=30;
     if(!menuPage)
     {
-        llDialog(ownerKey,"Turbo Safety Relay Menu\n",["Add","Remove","Exit","List","Set Mode","Turn Off"],menuChannel);
+        llDialog(ownerKey,"\n"+MANPAGE,["Add","Remove","Exit","List","Set Mode","Turn Off"],menuChannel);
     }
     else if(menuPage==1)
     {
-        llDialog(ownerKey,"Turbo Safety Relay Menu\nAdd to Blacklist",["Scan User","Scan Object","<--","Input"],menuChannel);
+        llDialog(ownerKey,"\n"+MANPAGE+"\n\nAdd to Blacklist",["Scan User","Scan Object","<--","Input"],menuChannel);
     }
     else if(menuPage==2)
     {
-        llDialog(ownerKey,"Turbo Safety Relay Menu\nRemove from Blacklist",["Input","Select","<--"],menuChannel);
+        llDialog(ownerKey,"\n"+MANPAGE+"\n\nRemove from Blacklist",["Input","Select","<--"],menuChannel);
     }
     else if(menuPage==3)
     {
-        llTextBox(ownerKey,"Turbo Safety Relay Menu\nType one or more Keys or Usernames (if in-sim)\nTo Add to the Blacklist",menuChannel);
+        llTextBox(ownerKey,"\n"+MANPAGE+"\n\nType one or more Keys or Usernames (if in-sim)\nTo Add to the Blacklist",menuChannel);
         menuTimeout+=90;
     }
     else if(menuPage==4)
     { //Scaned Users
-        llDialog(ownerKey,"Turbo Safety Relay Menu\nChoose the User to blacklist.",setupList(),menuChannel);
+        llDialog(ownerKey,"\n"+MANPAGE+"\n\nChoose the User to blacklist.",setupList(),menuChannel);
     }
     else if(menuPage==5)
     { //Scanned Objects
-        llDialog(ownerKey,"Turbo Safety Relay Menu\nChoose the Object to blacklist.",setupList(),menuChannel);
+        llDialog(ownerKey,"\n"+MANPAGE+"\n\nChoose the Object to blacklist.",setupList(),menuChannel);
     }
     else if(menuPage==6)
     {
-        llTextBox(ownerKey,"Turbo Safety Relay Menu\nType one or more Keys or Usernames (if in-sim)\nTo Remove from the Blacklist",menuChannel);
+        llTextBox(ownerKey,"\n"+MANPAGE+"\n\nType one or more Keys or Usernames (if in-sim)\nTo Remove from the Blacklist",menuChannel);
         menuTimeout+=90;
     }
     else if(menuPage==7)
     { // Remove with List
-        llDialog(ownerKey,"Turbo Safety Relay Menu\nChoose the User or Object to remove.",setupList(),menuChannel);
+        llDialog(ownerKey,"\n"+MANPAGE+"\n\nChoose the User or Object to remove.",setupList(),menuChannel);
     }
     else if(menuPage==8)
     {
-        llDialog(ownerKey,"Turbo Safety Relay Menu\nAsk Mode: Asks for Permission\nSemi Auto: Allows Non-Restrictive RLV\nAutomatic: Allows RLV, Checks Blacklist\nFull Auto: Automatic, Ignores Blacklist (faster)",["Ask Mode","Semi Auto","<--","Automatic","Full Auto"],menuChannel);
+        llDialog(ownerKey,"\n"+MANPAGE+"\n\nAsk: Asks for Permission\nLite: Allows Non-Restrictive RLV\nAuto: Allows RLV, Checks Blacklist\nRisky: Automatic, Ignores Blacklist (faster)",["Ask","Lite","<--","Auto","Risky"],menuChannel);
     }
 }
 checkBlacklist(key id)
@@ -475,7 +476,7 @@ processQueue()
                 acceptObject();
             }
             else if(relayMode==1)
-            {  //Semi Auto Mode (allows =force and =number)
+            {  //Lite Mode (allows =force and =number)
                 integer working=1;
                 while(working)
                 {
@@ -846,10 +847,10 @@ default
             }
             else if(menuPage==8)
             {
-                if(message=="Ask Mode") relayMode=0;
-                else if(message=="Semi Auto") relayMode=1;
-                else if(message=="Automatic") relayMode=2;
-                else if(message=="Full Auto") relayMode=3;
+                if(message=="Ask") relayMode=0;
+                else if(message=="Lite") relayMode=1;
+                else if(message=="Auto") relayMode=2;
+                else if(message=="Risky") relayMode=3;
                 llMessageLinked(LINK_ALL_OTHERS,relayMode,"SetMode",NULL_KEY);
                 menuPage=0;
                 doMenu();
