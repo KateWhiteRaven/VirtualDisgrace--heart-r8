@@ -57,10 +57,10 @@ list ATTACHMENTS=["none","chest","skull","left shoulder","right shoulder","left 
 "l upper arm","l forearm","right hip","r upper leg","r lower leg","left hip","l upper leg","l lower leg","stomach","left pec",
 "right pec","center 2","top right","top","top left","center","bottom left","bottom","bottom right","neck","root"];
 list CLOTHING=["gloves","jacket","pants","shirt","shoes","skirt","socks","underpants","undershirt","skin","eyes","hair","shape","alpha","tattoo"];
-key ownerKey;
-key avatarKey;
-key safeKey;
-key askingKey;
+key ownerKey=NULL_KEY;
+key avatarKey=NULL_KEY;
+key safeKey=NULL_KEY;
+key askingKey=NULL_KEY;
 key object1Key=NULL_KEY;
 key object2Key=NULL_KEY;
 key object3Key=NULL_KEY;
@@ -320,7 +320,7 @@ activateSafety() //Activates the Safety System
 closeSafety() //Closes the Safeword System
 {
     llListenRemove(listener);
-    if(avatarKey!=NULL) avatarBlacklist+=avatarKey;
+    if(avatarKey) avatarBlacklist+=avatarKey;
     setSafetyColor();
     safeKey=NULL;
     timeout=0;
@@ -487,26 +487,26 @@ default
                     }    // ## Toy
                 }
                 controllerCount=number;
-                if(!number)
+                if(!controllerCount)
                 {
                     if(primL1) llSetLinkColor(primL1,DARK_GREEN,ALL_SIDES);
                     if(primL2) llSetLinkColor(primL2,DARK_GREEN,ALL_SIDES);
                     if(primL3) llSetLinkColor(primL3,DARK_RED,ALL_SIDES);
                     if(srsTimeout+timeout) closeSafety();
                 }
-                else if(number==1)
+                else if(controllerCount==1)
                 {
                     if(primL1) llSetLinkColor(primL1,GREEN,ALL_SIDES);
                     if(primL2) llSetLinkColor(primL2,DARK_GREEN,ALL_SIDES);
                     if(primL3) llSetLinkColor(primL3,DARK_RED,ALL_SIDES);
                 }
-                else if(number==2)
+                else if(controllerCount==2)
                 {
                     if(primL1) llSetLinkColor(primL1,GREEN,ALL_SIDES);
                     if(primL2) llSetLinkColor(primL2,GREEN,ALL_SIDES);
                     if(primL3) llSetLinkColor(primL3,DARK_RED,ALL_SIDES);
                 }
-                else if(number==3)
+                else if(controllerCount==3)
                 {
                     if(primL1) llSetLinkColor(primL1,GREEN,ALL_SIDES);
                     if(primL2) llSetLinkColor(primL2,GREEN,ALL_SIDES);
@@ -553,7 +553,7 @@ default
             }
             else if(linkDetected==primL1)
             {
-                if(object1Key!=NULL)
+                if(object1Key)
                 {
                     if(lockoutTimeout)
                     {
@@ -571,7 +571,7 @@ default
             }
             else if(linkDetected==primL2)
             {
-                if(object2Key!=NULL)
+                if(object2Key)
                 {
                     if(lockoutTimeout)
                     {
@@ -589,7 +589,7 @@ default
             }
             else if(linkDetected==primL3)
             {
-                if(object3Key!=NULL)
+                if(object3Key)
                 {
                     if(lockoutTimeout)
                     {

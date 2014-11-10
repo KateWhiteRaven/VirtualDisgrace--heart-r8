@@ -8,14 +8,14 @@
 
 //Constants
 
-string VERSION_IMPL="Turbo Safety 1.312"; // for !implversion
+string VERSION_IMPL="Turbo Safety 1.315"; // for !implversion
 string ORG_VERSION="!x-orgversions,ORG=0003/who=0002/mode=0000";
 integer VERSION_API=1100; // Version of RLV API
 integer MEMORY_LIMIT=61439; //Fine-tune to prevent Stackheap
 integer PIN=-5875279; // Auto updater PIN (WIP)
 integer RLV_CHANNEL=-1812221819;
 key WILDCARD="ffffffff-ffff-ffff-ffff-ffffffffffff";
-key NULL=NULL_KEY;
+string NULL=NULL_KEY;
 key MESSAGE="Message";
 list NULL_LIST=[]; // Fastest way to check / set empty list
 list RLV_PARSE=["|"]; // Speeds up Parsing a little
@@ -34,7 +34,7 @@ string CLEAR_ALL="@clear,detach=n,setdebug_renderresolutiondivisor:1=force";
 string CLEAR_DEBUG_RENDER="@setdebug_renderresolutiondivisor:1=force";
 string CLEAR_ENV="@setenv_daytime:-1=force";
 string FORCE_UNSIT="@unsit=force";
-vector RED=<1.0,0.0,0.0>;
+vector RED=<1.0,0.0,0.0>; //Speeds up the busy light operation greatly
 vector DARK_RED=<0.3,0.0,0.0>;
 
 // Variables
@@ -45,11 +45,11 @@ string find2;
 string find1;
 string find0;
 string lastControllers;
-key keyObject1; // Object Key
-key keyObject2;
-key keyObject3;
-key newObject;
-key safetyObject;
+key keyObject1=NULL_KEY; // Object Key
+key keyObject2=NULL_KEY;
+key keyObject3=NULL_KEY;
+key newObject=NULL_KEY;
+key safetyObject=NULL_KEY;
 list restrictionsObject1; // Restrictions List
 list restrictionsObject2;
 list restrictionsObject3;
@@ -59,8 +59,8 @@ list restrictionsObject3;
 list newRestrictions;
 list commandList;
 list find3; // Used to speed up list searches a tiny bit
-key sitTargetKey; // For Force Resitting after a relog
-key ownerKey; // Eliminates excessive llGetOwner() calls
+key sitTargetKey=NULL_KEY; // For Force Resitting after a relog
+key ownerKey=NULL_KEY; // Eliminates excessive llGetOwner() calls
 integer relayMode; // Are we Ask Mode or Auto Mode?
 integer power; // Are we turned off or turned on?
 integer controllerCount; // Number of controlling objects
@@ -156,6 +156,7 @@ checkRez()
 //        }
     }
     checkRezTimeout=60;
+    defragObjects();
 }
 rejectObject()
 {
@@ -286,7 +287,7 @@ doRLV() // Directs the operation of the relay
             find3=["unsit=n"];
             if(searchCommands())
             {
-                if(sitTargetKey!=NULL) llOwnerSay("@sit:"+(string)sitTargetKey+"=force");
+                if(sitTargetKey) llOwnerSay("@sit:"+(string)sitTargetKey+"=force");
             }
             if(pingedObjects==NULL_LIST)
             {
@@ -319,7 +320,9 @@ doRLV() // Directs the operation of the relay
             }
         }  // For now, we ignore commands if objects are full
     }
+    if(isKO) removeObject(newObject);
     defragObjects();
+    //llMessageLinked(LINK_ROOT,controllerCount,"controllerCount",NULL);
 }
 removalCheck()
 {
@@ -381,7 +384,7 @@ integer applyRLV() // Parses each command, telling the function caller if they c
         {
             executeRLV();  //Confirm One-Shot commands
         }
-        else if(find=="clear")
+        else if(find=="@clear")
         {
             if(find2=="") //Same as !release for broken devices
             {
@@ -495,7 +498,7 @@ defragObjects() // Cleans up command lists so they stay in order
 removeObject(key which) // !release meta command subroutine
 {
     integer x=0;
-    if(which==WILDCARD || (controllerCount<=1 && which==keyObject1)) // Used when Clearing the last controller, or clearing all controllers (ping)
+    if(which==WILDCARD || (controllerCount<2 && which==keyObject1)) // Used when Clearing the last controller, or clearing all controllers (ping)
     {
         llOwnerSay(CLEAR_ALL);
         if(keyObject1) llRegionSayTo(keyObject1,RLV_CHANNEL,newCommands+","+(string)keyObject1+RELEASE_FOOTER);
@@ -665,7 +668,6 @@ addToObject() // Assigns restrictions to a controller
             }
         }
     }
-    if(isKO) removeObject(newObject);
 }
 setObject() // Setsup a new controller
 {
@@ -694,8 +696,6 @@ setObject() // Setsup a new controller
             keyObject3=newObject;
         }
     }
-    if(isKO) removeObject(newObject);
-    else llMessageLinked(LINK_ROOT,controllerCount,"controllerCount",NULL);
 }
 reapplyRestrictions(key which) // Refreshes restrictions after relog or fast release
 {
@@ -803,8 +803,8 @@ powerOn()
     busyOn();
     initVars();
     llMessageLinked(LINK_ROOT,0,WARNING,NULL);
-    llMessageLinked(LINK_ROOT,0,"POST",NULL);
-    llMessageLinked(LINK_ALL_OTHERS,0,CONTROLLERS+(string)NULL+", "+(string)NULL+", "+(string)NULL,NULL);
+    llMessageLinked(LINK_ALL_OTHERS,0,POWER_ON,NULL);
+    llMessageLinked(LINK_ALL_OTHERS,0,CONTROLLERS+NULL+", "+NULL+", "+NULL,NULL);
     ownerKey=llGetOwner();
     if(llGetAttached()) llRequestPermissions(ownerKey,PERMISSION_TAKE_CONTROLS);
     llSleep(5.0);
@@ -827,9 +827,9 @@ sendStatus()
         if(controllerCount)
         {
             string message=" Restrictions In Effect: ";
-            if(keyObject1!=NULL) llMessageLinked(LINK_ROOT,0,(string)llGetListLength(restrictionsObject1)+message+llKey2Name(keyObject1)+": "+llList2CSV(restrictionsObject1),MESSAGE);
-            if(keyObject2!=NULL) llMessageLinked(LINK_ROOT,0,(string)llGetListLength(restrictionsObject2)+message+llKey2Name(keyObject2)+": "+llList2CSV(restrictionsObject2),MESSAGE);
-            if(keyObject3!=NULL) llMessageLinked(LINK_ROOT,0,(string)llGetListLength(restrictionsObject3)+message+llKey2Name(keyObject3)+": "+llList2CSV(restrictionsObject3),MESSAGE);
+            if(keyObject1) llMessageLinked(LINK_ROOT,0,(string)llGetListLength(restrictionsObject1)+message+llKey2Name(keyObject1)+": "+llList2CSV(restrictionsObject1),MESSAGE);
+            if(keyObject2) llMessageLinked(LINK_ROOT,0,(string)llGetListLength(restrictionsObject2)+message+llKey2Name(keyObject2)+": "+llList2CSV(restrictionsObject2),MESSAGE);
+            if(keyObject3) llMessageLinked(LINK_ROOT,0,(string)llGetListLength(restrictionsObject3)+message+llKey2Name(keyObject3)+": "+llList2CSV(restrictionsObject3),MESSAGE);
         }
     }
     else
@@ -865,9 +865,9 @@ default
                 llListenControl(listenRLV,FALSE);
                 llOwnerSay(CLEAR_ALL);
                 llOwnerSay(CLEAR_ENV);
-                if(keyObject1!=NULL) llRegionSayTo(keyObject1,RLV_CHANNEL,RELEASE_HEADER+","+(string)keyObject1+RELEASE_FOOTER);
-                if(keyObject2!=NULL) llRegionSayTo(keyObject2,RLV_CHANNEL,RELEASE_HEADER+","+(string)keyObject2+RELEASE_FOOTER);
-                if(keyObject3!=NULL) llRegionSayTo(keyObject3,RLV_CHANNEL,RELEASE_HEADER+","+(string)keyObject3+RELEASE_FOOTER);
+                if(keyObject1) llRegionSayTo(keyObject1,RLV_CHANNEL,RELEASE_HEADER+","+(string)keyObject1+RELEASE_FOOTER);
+                if(keyObject2) llRegionSayTo(keyObject2,RLV_CHANNEL,RELEASE_HEADER+","+(string)keyObject2+RELEASE_FOOTER);
+                if(keyObject3) llRegionSayTo(keyObject3,RLV_CHANNEL,RELEASE_HEADER+","+(string)keyObject3+RELEASE_FOOTER);
                 integer forceUnsit;
                 if(sitTargetKey==keyObject1) forceUnsit=1;
                 else if(sitTargetKey==keyObject2) forceUnsit=1;
@@ -973,6 +973,7 @@ default
     {
         if(channel==RLV_CHANNEL)
         {
+            if(id==ownerKey) return;
             if(id!=safetyObject)
             {
                 busyOn();
@@ -999,9 +1000,9 @@ default
                 llListenRemove(listenViewer);
                 llMessageLinked(LINK_ROOT,0,WARNING,NULL);
                 pingedObjects=NULL_LIST;
-                if(keyObject1!=NULL) pingedObjects+=keyObject1;
-                if(keyObject2!=NULL) pingedObjects+=keyObject2;
-                if(keyObject3!=NULL) pingedObjects+=keyObject3;
+                if(keyObject1) pingedObjects+=keyObject1;
+                if(keyObject2) pingedObjects+=keyObject2;
+                if(keyObject3) pingedObjects+=keyObject3;
                 integer x=0;
                 while(x<llGetListLength(pingedObjects))
                 {
