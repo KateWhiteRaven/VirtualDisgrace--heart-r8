@@ -669,7 +669,7 @@ default
             }
             else
             {
-                holdTimeout=4;
+                holdTimeout=1;
                 buttonHeld=primRoot;
                 llSetLinkColor(primRoot,GREY,ALL_SIDES);
             }
