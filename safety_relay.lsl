@@ -34,8 +34,8 @@ string CLEAR_ALL="@clear,detach=n,setdebug_renderresolutiondivisor:1=force";
 string CLEAR_DEBUG_RENDER="@setdebug_renderresolutiondivisor:1=force";
 string CLEAR_ENV="@setenv_daytime:-1=force";
 string FORCE_UNSIT="@unsit=force";
-vector BLUE=<0.0,0.5,1.0>; //Speeds up the busy light operation greatly
-vector DARK_BLUE=<0.0,0.11,0.22>;
+vector BLUE=<0.502, 1.000, 1.000>; //Speeds up the busy light operation greatly
+vector BLANK=<1.0,1.0,1.0>;
 
 // Variables
 
@@ -107,7 +107,7 @@ busyOn()
 }
 busyOff()
 {
-    if(primIndicator) llSetLinkColor(primIndicator,DARK_BLUE,ALL_SIDES);
+    if(primIndicator) llSetLinkColor(primIndicator,BLANK,ALL_SIDES);
 }
 initVars() //Should not need this, but for some reason, it
 {          //is needed for null checks, so it gets used when

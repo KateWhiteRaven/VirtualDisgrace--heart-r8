@@ -10,14 +10,14 @@ list NULL_LIST=[];
 vector RED=<1.0,0.0,0.0>;
 vector DARK_RED=<0.3,0.0,0.0>;
 vector GREEN=<0.0,1.0,0.0>;
-vector DARK_GREEN=<0.0,0.3,0.0>;
-vector YELLOW=<1.0,1.0,0.0>;
-vector ORANGE=<0.8,0.4,0.0>;
+vector YELLOW=<1.000, 1.000, 0.000>;
+vector ORANGE=<0.071, 0.071, 0.000>;
 vector VIOLET=<1.0,0.0,1.0>;
 vector DARK_VIOLET=<0.3,0.0,0.3>;
 vector BLANK=<1.0,1.0,1.0>;
-vector GREY=<0.5,0.5,0.5>;
-vector BLUE=<0.0,0.5,1.0>;
+vector GREY=<0.910, 0.910, 0.910>;
+vector BLUE=<0.000, 0.502, 1.000>;
+vector PINK=<1.000, 0.000, 0.502>;
 //integer DEBUG=1; //Uncomment this and all //if(DEBUG) lines to debug
 
 // Variables
@@ -147,24 +147,24 @@ post()
     if(primSafety) llSetLinkColor(primSafety,RED,ALL_SIDES);
     if(primMode) setMode(relayMode);
     else setMode(3);
-    if(primL1) llSetLinkColor(primL1,GREEN,ALL_SIDES);
+    if(primL1) llSetLinkColor(primL1,PINK,ALL_SIDES);
     if(primYes) llSetLinkColor(primYes,GREEN,ALL_SIDES);
-    llSetLinkColor(primRoot,BLUE,ALL_SIDES);
+    llSetLinkColor(primRoot,BLANK,ALL_SIDES);
     if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
     llSleep(0.1);
-    if(primL2) llSetLinkColor(primL2,GREEN,ALL_SIDES);
+    if(primL2) llSetLinkColor(primL2,YELLOW,ALL_SIDES);
     if(primNo) llSetLinkColor(primNo,RED,ALL_SIDES);
     llSleep(0.1);
-    if(primL3) llSetLinkColor(primL3,RED,ALL_SIDES);
+    if(primL3) llSetLinkColor(primL3,BLUE,ALL_SIDES);
     if(primQueue) llSetLinkColor(primQueue,VIOLET,ALL_SIDES);
     llSleep(0.8);
-    if(primL3) llSetLinkColor(primL3,DARK_RED,ALL_SIDES);
+    if(primL3) llSetLinkColor(primL3,BLANK,ALL_SIDES);
     if(primQueue) llSetLinkColor(primQueue,DARK_VIOLET,ALL_SIDES);
     llSleep(0.1);
-    if(primL2) llSetLinkColor(primL2,DARK_GREEN,ALL_SIDES);
+    if(primL2) llSetLinkColor(primL2,BLANK,ALL_SIDES);
     if(primNo) llSetLinkColor(primNo,BLANK,ALL_SIDES);
     llSleep(0.1);
-    if(primL1) llSetLinkColor(primL1,DARK_GREEN,ALL_SIDES);
+    if(primL1) llSetLinkColor(primL1,BLANK,ALL_SIDES);
     if(primYes) llSetLinkColor(primYes,BLANK,ALL_SIDES);
     if(primLockout)
     {
@@ -181,7 +181,7 @@ post()
         llSetLinkColor(primRoot,BLANK,ALL_SIDES);
         if(primSafety) llSetLinkColor(primSafety,BLANK,ALL_SIDES);
     }
-    else if(warningMode==1) llSetLinkColor(primRoot,BLUE,ALL_SIDES);
+    else if(warningMode==1) llSetLinkColor(primRoot,GREY,ALL_SIDES);
     else llSetLinkColor(primRoot,BLANK,ALL_SIDES);
     if(attachmentsLocked)
     {
@@ -362,9 +362,9 @@ default
             lockoutSafetyDelay=0;    // ## Toy
             llOwnerSay("Relay Offline");
             power=0;
-            if(primL1) llSetLinkColor(primL1,DARK_GREEN,ALL_SIDES);
-            if(primL2) llSetLinkColor(primL2,DARK_GREEN,ALL_SIDES);
-            if(primL3) llSetLinkColor(primL3,DARK_RED,ALL_SIDES);
+            if(primL1) llSetLinkColor(primL1,BLANK,ALL_SIDES);
+            if(primL2) llSetLinkColor(primL2,BLANK,ALL_SIDES);
+            if(primL3) llSetLinkColor(primL3,BLANK,ALL_SIDES);
             if(primSafety) llSetLinkColor(primSafety,BLANK,ALL_SIDES);
             if(primMode) llSetLinkTexture(primMode,"269545d5-5691-b916-18ff-b0248d2ae39f",ALL_SIDES);
             if(primYes) llSetLinkColor(primYes,BLANK,ALL_SIDES);
@@ -409,7 +409,7 @@ default
                         llSetLinkColor(primYes,GREEN,ALL_SIDES);
                         llSetLinkColor(primNo,RED,ALL_SIDES);
                         if(primQueue) llSetLinkColor(primQueue,VIOLET,ALL_SIDES);
-                        llSetLinkColor(primRoot,BLUE,ALL_SIDES);
+                        llSetLinkColor(primRoot,BLANK,ALL_SIDES);
                         asking=1;
                     }
                 }
@@ -437,7 +437,7 @@ default
         else if(message=="Warning")
         {
             warningMode=1;
-            llSetLinkColor(primRoot,BLUE,ALL_SIDES);
+            llSetLinkColor(primRoot,GREY,ALL_SIDES);
         }
         else if(message=="Detach")
         {
@@ -492,28 +492,28 @@ default
                 controllerCount=number;
                 if(!controllerCount)
                 {
-                    if(primL1) llSetLinkColor(primL1,DARK_GREEN,ALL_SIDES);
-                    if(primL2) llSetLinkColor(primL2,DARK_GREEN,ALL_SIDES);
-                    if(primL3) llSetLinkColor(primL3,DARK_RED,ALL_SIDES);
+                    if(primL1) llSetLinkColor(primL1,BLANK,ALL_SIDES);
+                    if(primL2) llSetLinkColor(primL2,BLANK,ALL_SIDES);
+                    if(primL3) llSetLinkColor(primL3,BLANK,ALL_SIDES);
                     if(srsTimeout+timeout) closeSafety();
                 }
                 else if(controllerCount==1)
                 {
-                    if(primL1) llSetLinkColor(primL1,GREEN,ALL_SIDES);
-                    if(primL2) llSetLinkColor(primL2,DARK_GREEN,ALL_SIDES);
-                    if(primL3) llSetLinkColor(primL3,DARK_RED,ALL_SIDES);
+                    if(primL1) llSetLinkColor(primL1,PINK,ALL_SIDES);
+                    if(primL2) llSetLinkColor(primL2,BLANK,ALL_SIDES);
+                    if(primL3) llSetLinkColor(primL3,BLANK,ALL_SIDES);
                 }
                 else if(controllerCount==2)
                 {
-                    if(primL1) llSetLinkColor(primL1,GREEN,ALL_SIDES);
-                    if(primL2) llSetLinkColor(primL2,GREEN,ALL_SIDES);
-                    if(primL3) llSetLinkColor(primL3,DARK_RED,ALL_SIDES);
+                    if(primL1) llSetLinkColor(primL1,PINK,ALL_SIDES);
+                    if(primL2) llSetLinkColor(primL2,YELLOW,ALL_SIDES);
+                    if(primL3) llSetLinkColor(primL3,BLANK,ALL_SIDES);
                 }
                 else if(controllerCount==3)
                 {
-                    if(primL1) llSetLinkColor(primL1,GREEN,ALL_SIDES);
-                    if(primL2) llSetLinkColor(primL2,GREEN,ALL_SIDES);
-                    if(primL3) llSetLinkColor(primL3,RED,ALL_SIDES);
+                    if(primL1) llSetLinkColor(primL1,PINK,ALL_SIDES);
+                    if(primL2) llSetLinkColor(primL2,YELLOW,ALL_SIDES);
+                    if(primL3) llSetLinkColor(primL3,BLUE,ALL_SIDES);
                 }
                 object1Key=llList2Key(temp,1);
                 object2Key=llList2Key(temp,2);
@@ -670,7 +670,7 @@ default
             {
                 holdTimeout=4;
                 buttonHeld=primRoot;
-                llSetLinkColor(primRoot,BLUE,ALL_SIDES);
+                llSetLinkColor(primRoot,GREY,ALL_SIDES);
             }
         }
         else if(llDetectedLinkNumber(0)==primRoot)
@@ -935,9 +935,9 @@ default
         }
         if(flashTimeout==1)
         {
-            if(controllerCount>0 && primL1) llSetLinkColor(primL1,GREEN,ALL_SIDES);
-            if(controllerCount>1 && primL2) llSetLinkColor(primL2,GREEN,ALL_SIDES);
-            if(controllerCount>2 && primL3) llSetLinkColor(primL3,RED,ALL_SIDES);
+            if(controllerCount>0 && primL1) llSetLinkColor(primL1,PINK,ALL_SIDES);
+            if(controllerCount>1 && primL2) llSetLinkColor(primL2,YELLOW,ALL_SIDES);
+            if(controllerCount>2 && primL3) llSetLinkColor(primL3,BLUE,ALL_SIDES);
         }
         if(flashTimeout) flashTimeout--;
         if(srsTimeout==1) closeSafety();
