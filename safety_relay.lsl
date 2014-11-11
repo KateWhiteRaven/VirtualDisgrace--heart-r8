@@ -34,8 +34,6 @@ string CLEAR_ALL="@clear,detach=n,setdebug_renderresolutiondivisor:1=force";
 string CLEAR_DEBUG_RENDER="@setdebug_renderresolutiondivisor:1=force";
 string CLEAR_ENV="@setenv_daytime:-1=force";
 string FORCE_UNSIT="@unsit=force";
-vector BLUE=<0.502, 1.000, 1.000>; //Speeds up the busy light operation greatly
-vector BLANK=<1.0,1.0,1.0>;
 
 // Variables
 
@@ -103,11 +101,11 @@ setPrims() //For setting the linked script prims
 }
 busyOn()
 {
-    if(primIndicator) llSetLinkColor(primIndicator,BLUE,ALL_SIDES);
+    if(primIndicator) llSetLinkTexture(primIndicator,"db551eeb-a066-f3bc-1a99-5ac772625970",ALL_SIDES);
 }
 busyOff()
 {
-    if(primIndicator) llSetLinkColor(primIndicator,BLANK,ALL_SIDES);
+    if(primIndicator) llSetLinkTexture(primIndicator,"ca9016c8-645a-1226-261c-e234bb3f9eed",ALL_SIDES);
 }
 initVars() //Should not need this, but for some reason, it
 {          //is needed for null checks, so it gets used when

@@ -17,7 +17,8 @@ vector DARK_VIOLET=<0.3,0.0,0.3>;
 vector BLANK=<1.0,1.0,1.0>;
 vector GREY=<0.910, 0.910, 0.910>;
 vector BLUE=<0.000, 0.502, 1.000>;
-vector PINK=<1.000, 0.000, 0.502>;
+string LED_ON="db551eeb-a066-f3bc-1a99-5ac772625970";
+string LED_OFF="ca9016c8-645a-1226-261c-e234bb3f9eed";
 //integer DEBUG=1; //Uncomment this and all //if(DEBUG) lines to debug
 
 // Variables
@@ -147,24 +148,24 @@ post()
     if(primSafety) llSetLinkColor(primSafety,RED,ALL_SIDES);
     if(primMode) setMode(relayMode);
     else setMode(3);
-    if(primL1) llSetLinkColor(primL1,PINK,ALL_SIDES);
+    if(primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
     if(primYes) llSetLinkColor(primYes,GREEN,ALL_SIDES);
     llSetLinkColor(primRoot,BLANK,ALL_SIDES);
     if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
     llSleep(0.1);
-    if(primL2) llSetLinkColor(primL2,YELLOW,ALL_SIDES);
+    if(primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
     if(primNo) llSetLinkColor(primNo,RED,ALL_SIDES);
     llSleep(0.1);
-    if(primL3) llSetLinkColor(primL3,BLUE,ALL_SIDES);
+    if(primL3) llSetLinkTexture(primL3,LED_ON,ALL_SIDES);
     if(primQueue) llSetLinkColor(primQueue,VIOLET,ALL_SIDES);
     llSleep(0.8);
-    if(primL3) llSetLinkColor(primL3,BLANK,ALL_SIDES);
+    if(primL3) llSetLinkTexture(primL3,LED_OFF,ALL_SIDES);
     if(primQueue) llSetLinkColor(primQueue,DARK_VIOLET,ALL_SIDES);
     llSleep(0.1);
-    if(primL2) llSetLinkColor(primL2,BLANK,ALL_SIDES);
+    if(primL2) llSetLinkTexture(primL2,LED_OFF,ALL_SIDES);
     if(primNo) llSetLinkColor(primNo,BLANK,ALL_SIDES);
     llSleep(0.1);
-    if(primL1) llSetLinkColor(primL1,BLANK,ALL_SIDES);
+    if(primL1) llSetLinkTexture(primL1,LED_OFF,ALL_SIDES);
     if(primYes) llSetLinkColor(primYes,BLANK,ALL_SIDES);
     if(primLockout)
     {
@@ -362,9 +363,9 @@ default
             lockoutSafetyDelay=0;    // ## Toy
             llOwnerSay("Relay Offline");
             power=0;
-            if(primL1) llSetLinkColor(primL1,BLANK,ALL_SIDES);
-            if(primL2) llSetLinkColor(primL2,BLANK,ALL_SIDES);
-            if(primL3) llSetLinkColor(primL3,BLANK,ALL_SIDES);
+            if(primL1) llSetLinkTexture(primL1,LED_OFF,ALL_SIDES);
+            if(primL2) llSetLinkTexture(primL2,LED_OFF,ALL_SIDES);
+            if(primL3) llSetLinkTexture(primL3,LED_OFF,ALL_SIDES);
             if(primSafety) llSetLinkColor(primSafety,BLANK,ALL_SIDES);
             if(primMode) llSetLinkTexture(primMode,"269545d5-5691-b916-18ff-b0248d2ae39f",ALL_SIDES);
             if(primYes) llSetLinkColor(primYes,BLANK,ALL_SIDES);
@@ -392,9 +393,9 @@ default
         {
             if(power) llSetLinkColor(primRoot,BLANK,ALL_SIDES);
             flashTimeout=2;
-            if(controllerCount>0 && primL1) llSetLinkColor(primL1,BLUE,ALL_SIDES);
-            if(controllerCount>1 && primL2) llSetLinkColor(primL2,BLUE,ALL_SIDES);
-            if(controllerCount>2 && primL3) llSetLinkColor(primL3,BLUE,ALL_SIDES);
+            if(controllerCount>0 && primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
+            if(controllerCount>1 && primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
+            if(controllerCount>2 && primL3) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
         }
         else if(message=="Asking")
         {
@@ -492,28 +493,28 @@ default
                 controllerCount=number;
                 if(!controllerCount)
                 {
-                    if(primL1) llSetLinkColor(primL1,BLANK,ALL_SIDES);
-                    if(primL2) llSetLinkColor(primL2,BLANK,ALL_SIDES);
-                    if(primL3) llSetLinkColor(primL3,BLANK,ALL_SIDES);
+                    if(primL1) llSetLinkTexture(primL1,LED_OFF,ALL_SIDES);
+                    if(primL2) llSetLinkTexture(primL2,LED_OFF,ALL_SIDES);
+                    if(primL3) llSetLinkTexture(primL3,LED_OFF,ALL_SIDES);
                     if(srsTimeout+timeout) closeSafety();
                 }
                 else if(controllerCount==1)
                 {
-                    if(primL1) llSetLinkColor(primL1,PINK,ALL_SIDES);
-                    if(primL2) llSetLinkColor(primL2,BLANK,ALL_SIDES);
-                    if(primL3) llSetLinkColor(primL3,BLANK,ALL_SIDES);
+                    if(primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
+                    if(primL2) llSetLinkTexture(primL2,LED_OFF,ALL_SIDES);
+                    if(primL3) llSetLinkTexture(primL3,LED_OFF,ALL_SIDES);
                 }
                 else if(controllerCount==2)
                 {
-                    if(primL1) llSetLinkColor(primL1,PINK,ALL_SIDES);
-                    if(primL2) llSetLinkColor(primL2,YELLOW,ALL_SIDES);
-                    if(primL3) llSetLinkColor(primL3,BLANK,ALL_SIDES);
+                    if(primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
+                    if(primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
+                    if(primL3) llSetLinkTexture(primL3,LED_OFF,ALL_SIDES);
                 }
                 else if(controllerCount==3)
                 {
-                    if(primL1) llSetLinkColor(primL1,PINK,ALL_SIDES);
-                    if(primL2) llSetLinkColor(primL2,YELLOW,ALL_SIDES);
-                    if(primL3) llSetLinkColor(primL3,BLUE,ALL_SIDES);
+                    if(primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
+                    if(primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
+                    if(primL3) llSetLinkTexture(primL3,LED_ON,ALL_SIDES);
                 }
                 object1Key=llList2Key(temp,1);
                 object2Key=llList2Key(temp,2);
@@ -935,9 +936,9 @@ default
         }
         if(flashTimeout==1)
         {
-            if(controllerCount>0 && primL1) llSetLinkColor(primL1,PINK,ALL_SIDES);
-            if(controllerCount>1 && primL2) llSetLinkColor(primL2,YELLOW,ALL_SIDES);
-            if(controllerCount>2 && primL3) llSetLinkColor(primL3,BLUE,ALL_SIDES);
+            if(controllerCount>0 && primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
+            if(controllerCount>1 && primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
+            if(controllerCount>2 && primL3) llSetLinkTexture(primL3,LED_ON,ALL_SIDES);
         }
         if(flashTimeout) flashTimeout--;
         if(srsTimeout==1) closeSafety();
