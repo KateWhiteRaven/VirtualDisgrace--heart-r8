@@ -18,7 +18,7 @@ vector BLANK=<1.0,1.0,1.0>;
 vector GREY=<0.910, 0.910, 0.910>;
 vector BLUE=<0.000, 0.502, 1.000>;
 string LED_ON="db551eeb-a066-f3bc-1a99-5ac772625970";
-string LED_OFF="ca9016c8-645a-1226-261c-e234bb3f9eed";
+string LED_OFF=TEXTURE_TRANSPARENT;
 //integer DEBUG=1; //Uncomment this and all //if(DEBUG) lines to debug
 
 // Variables
@@ -145,12 +145,12 @@ post()
         else if(llGetLinkName(x)=="Relay") primRelay=x;
     }
     if(primLockout) llSetLinkColor(primLockout,RED,ALL_SIDES);
-    if(primSafety) llSetLinkColor(primSafety,RED,ALL_SIDES);
+    if(primSafety) llSetLinkColor(primSafety,YELLOW,ALL_SIDES);
     if(primMode) setMode(relayMode);
     else setMode(3);
     if(primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
     if(primYes) llSetLinkColor(primYes,GREEN,ALL_SIDES);
-    llSetLinkColor(primRoot,BLANK,ALL_SIDES);
+    llSetLinkColor(primRoot,BLUE,ALL_SIDES);
     if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
     llSleep(0.1);
     if(primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
@@ -302,7 +302,7 @@ activateSafety() //Activates the Safety System
         else
         {
             timeout=30;
-            if(primSafety) llSetLinkColor(primSafety,BLUE,ALL_SIDES);
+            if(primSafety) llSetLinkColor(primSafety,YELLOW,ALL_SIDES);
             llSensor("","",AGENT,20.0,PI);
         }
     }
@@ -541,16 +541,16 @@ default
                     {
                         if(controllerCount)
                         {
-                            llSetLinkColor(primSafety,RED,ALL_SIDES);
+                            llSetLinkColor(primSafety,YELLOW,ALL_SIDES);
                             safeKey=WILDCARD;
                             buttonHeld=primSafety;
-                            holdTimeout=4;
+                            holdTimeout=1;
                         }
                         else
                         {
                             safeKey=WILDCARD;
                             buttonHeld=primSafety;
-                            holdTimeout=3;
+                            holdTimeout=2;
                         }
                     }
                 }
