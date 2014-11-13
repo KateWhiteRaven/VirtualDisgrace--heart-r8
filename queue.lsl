@@ -14,7 +14,7 @@ integer MEMORY_LIMIT=61439; //Fine-tune to prevent Stackheap
 integer PIN=-5875279; // Auto updater PIN (WIP)
 list RLV_PARSE=["|"]; // Speeds up Parsing a little
 key MESSAGE="Message";
-string MANPAGE="[http://www.virtualdisgrace.com/relay Virtual Disgrace - Relay]";
+string MANPAGE="\n[http://www.virtualdisgrace.com/relay Virtual Disgrace - Relay]";
 //integer DEBUG=1; // Uncomment this and all //if(DEBUG) lines to enable debugging
 
 // Variables
@@ -52,9 +52,6 @@ key rejectedObject;
 //list handoverObjects;
 string newCommands;
 string lastControllers;
-string MORE = "►";
-string PREV = "◄";
-string UPMENU = "BACK";
 key newObject;
 key ownerKey;
 key whoKey;
@@ -97,7 +94,7 @@ updateQueue()
 }
 list setupList()
 {
-    list buttons=[PREV,UPMENU,MORE];
+    list buttons=["◄","BACK","►"];
     if(menuPage==7)
     {
         integer blacklistLength=llGetListLength(blacklistNames);
@@ -148,41 +145,41 @@ doMenu()
     menuTimeout=30;
     if(!menuPage)
     {
-        llDialog(ownerKey,"\n"+MANPAGE,["Add","Remove","Exit","List","Set Mode","Turn Off"],menuChannel);
+        llDialog(ownerKey,MANPAGE,["Add","Remove","Exit","List","Set Mode","Turn Off"],menuChannel);
     }
     else if(menuPage==1)
     {
-        llDialog(ownerKey,"\n"+MANPAGE+"\n\nAdd to Blacklist",["Scan User","Scan Object",UPMENU,"Input"],menuChannel);
+        llDialog(ownerKey,MANPAGE+"\n\nAdd to Blacklist",["Scan User","Scan Object","BACK","Input"],menuChannel);
     }
     else if(menuPage==2)
     {
-        llDialog(ownerKey,"\n"+MANPAGE+"\n\nRemove from Blacklist",["Input","Select",UPMENU],menuChannel);
+        llDialog(ownerKey,MANPAGE+"\n\nRemove from Blacklist",["Input","Select","BACK"],menuChannel);
     }
     else if(menuPage==3)
     {
-        llTextBox(ownerKey,"\n"+MANPAGE+"\n\nType one or more Keys or Usernames (if in-sim)\nTo Add to the Blacklist",menuChannel);
+        llTextBox(ownerKey,MANPAGE+"\n\nType one or more Keys or Usernames (if in-sim)\nTo Add to the Blacklist",menuChannel);
         menuTimeout+=90;
     }
     else if(menuPage==4)
     { //Scaned Users
-        llDialog(ownerKey,"\n"+MANPAGE+"\n\nChoose the User to blacklist.",setupList(),menuChannel);
+        llDialog(ownerKey,MANPAGE+"\n\nChoose the User to blacklist.",setupList(),menuChannel);
     }
     else if(menuPage==5)
     { //Scanned Objects
-        llDialog(ownerKey,"\n"+MANPAGE+"\n\nChoose the Object to blacklist.",setupList(),menuChannel);
+        llDialog(ownerKey,MANPAGE+"\n\nChoose the Object to blacklist.",setupList(),menuChannel);
     }
     else if(menuPage==6)
     {
-        llTextBox(ownerKey,"\n"+MANPAGE+"\n\nType one or more Keys or Usernames (if in-sim)\nTo Remove from the Blacklist",menuChannel);
+        llTextBox(ownerKey,MANPAGE+"\n\nType one or more Keys or Usernames (if in-sim)\nTo Remove from the Blacklist",menuChannel);
         menuTimeout+=90;
     }
     else if(menuPage==7)
     { // Remove with List
-        llDialog(ownerKey,"\n"+MANPAGE+"\n\nChoose the User or Object to remove.",setupList(),menuChannel);
+        llDialog(ownerKey,MANPAGE+"\n\nChoose the User or Object to remove.",setupList(),menuChannel);
     }
     else if(menuPage==8)
     {
-        llDialog(ownerKey,"\n"+MANPAGE+"\n\nAsk: Asks for Permission\nLite: Allows Non-Restrictive RLV\nAuto: Allows RLV, Checks Blacklist\nRisky: Automatic, Ignores Blacklist (faster)",["Ask","Lite",UPMENU,"Auto","Risky"],menuChannel);
+        llDialog(ownerKey,MANPAGE+"\n\nAsk: Asks for Permission\nLite: Allows Non-Restrictive RLV\nAuto: Allows RLV, Checks Blacklist\nRisky: Automatic, Ignores Blacklist (faster)",["Ask","Lite","BACK","Auto","Risky"],menuChannel);
     }
 }
 checkBlacklist(key id)
@@ -705,7 +702,7 @@ default
     {
         if(channel==menuChannel)
         {
-            if(message==UPMENU)
+            if(message=="BACK")
             {
                 if(menuPage<3 || menuPage==8) menuPage=0;
                 else if(menuPage<6) menuPage=1;
@@ -794,12 +791,12 @@ default
             }
             else if(menuPage==4 || menuPage==5)
             {
-                if(message==PREV)
+                if(message=="◄")
                 {
                     listPage--;
                     doMenu();
                 }
-                else if(message==MORE)
+                else if(message=="►")
                 {
                     listPage++;
                     doMenu();
@@ -829,12 +826,12 @@ default
             }
             else if(menuPage==7)
             {
-                if(message==PREV)
+                if(message=="◄")
                 {
                     listPage--;
                     doMenu();
                 }
-                else if(message==MORE)
+                else if(message=="►")
                 {
                     listPage++;
                     doMenu();
