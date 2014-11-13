@@ -52,6 +52,9 @@ key rejectedObject;
 //list handoverObjects;
 string newCommands;
 string lastControllers;
+string MORE = "►";
+string PREV = "◄";
+string UPMENU = "BACK";
 key newObject;
 key ownerKey;
 key whoKey;
@@ -94,7 +97,7 @@ updateQueue()
 }
 list setupList()
 {
-    list buttons=["<<","<--",">>"];
+    list buttons=[PREV,UPMENU,MORE];
     if(menuPage==7)
     {
         integer blacklistLength=llGetListLength(blacklistNames);
@@ -149,11 +152,11 @@ doMenu()
     }
     else if(menuPage==1)
     {
-        llDialog(ownerKey,"\n"+MANPAGE+"\n\nAdd to Blacklist",["Scan User","Scan Object","<--","Input"],menuChannel);
+        llDialog(ownerKey,"\n"+MANPAGE+"\n\nAdd to Blacklist",["Scan User","Scan Object",UPMENU,"Input"],menuChannel);
     }
     else if(menuPage==2)
     {
-        llDialog(ownerKey,"\n"+MANPAGE+"\n\nRemove from Blacklist",["Input","Select","<--"],menuChannel);
+        llDialog(ownerKey,"\n"+MANPAGE+"\n\nRemove from Blacklist",["Input","Select",UPMENU],menuChannel);
     }
     else if(menuPage==3)
     {
@@ -179,7 +182,7 @@ doMenu()
     }
     else if(menuPage==8)
     {
-        llDialog(ownerKey,"\n"+MANPAGE+"\n\nAsk: Asks for Permission\nLite: Allows Non-Restrictive RLV\nAuto: Allows RLV, Checks Blacklist\nRisky: Automatic, Ignores Blacklist (faster)",["Ask","Lite","<--","Auto","Risky"],menuChannel);
+        llDialog(ownerKey,"\n"+MANPAGE+"\n\nAsk: Asks for Permission\nLite: Allows Non-Restrictive RLV\nAuto: Allows RLV, Checks Blacklist\nRisky: Automatic, Ignores Blacklist (faster)",["Ask","Lite",UPMENU,"Auto","Risky"],menuChannel);
     }
 }
 checkBlacklist(key id)
@@ -702,7 +705,7 @@ default
     {
         if(channel==menuChannel)
         {
-            if(message=="<--")
+            if(message==UPMENU)
             {
                 if(menuPage<3 || menuPage==8) menuPage=0;
                 else if(menuPage<6) menuPage=1;
@@ -791,12 +794,12 @@ default
             }
             else if(menuPage==4 || menuPage==5)
             {
-                if(message=="<<")
+                if(message==PREV)
                 {
                     listPage--;
                     doMenu();
                 }
-                else if(message==">>")
+                else if(message==MORE)
                 {
                     listPage++;
                     doMenu();
@@ -826,12 +829,12 @@ default
             }
             else if(menuPage==7)
             {
-                if(message=="<<")
+                if(message==PREV)
                 {
                     listPage--;
                     doMenu();
                 }
-                else if(message==">>")
+                else if(message==MORE)
                 {
                     listPage++;
                     doMenu();
