@@ -1,5 +1,7 @@
 //Interface Script by Da Chrome and Toy Wylie is licensed under a Creative Commons Attribution 3.0 Unported License. http://creativecommons.org/licenses/by/3.0/ Keep This Line Intact.
-// You do NOT have to make derivative works open source.
+// The artwork by Virtual Disgrace™ for the graphical user interface is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+// http://creativecommons.org/licenses/by-nc-sa/4.0/
+// For creating "closed source" derivatives, please use the original Turbo Safety RLV Relay as code base.
 // Supports 3 objects max
 
 // Constants
