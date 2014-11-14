@@ -199,11 +199,11 @@ askSafety(key ids)
     avatarKey=ids;
     listener=llListen(181917,"",avatarKey,"");
     string message;
-    if(safeKey==WILDCARD) message+=llGetUsername(ownerKey)+" is pleading for your help.\n\nWill you let them go?\nIgnoring this dialog will allow "+llGetUsername(ownerKey)+" to immediately ask someone else!";
-    else message+=llGetUsername(ownerKey)+" is pleading for your help to be free of "+llKey2Name(safeKey)+".\n\nWill you let them go?\nIgnoring this dialog will allow "+llGetUsername(ownerKey)+" to immediately ask someone else!";
+    if(safeKey==WILDCARD) message+="\n"+llGetDisplayName(ownerKey)+" seems to be in trouble.\n\nWill you help them out?";
+    else message+="\n"+llGetDisplayName(ownerKey)+" needs your help to escape from "+llKey2Name(safeKey)+".\n\nWill you lend them a hand?";
     llDialog(avatarKey,message,["Yes","No"],181917); //Give them a Yes/No menu
-    if(llGetUsername(avatarKey)!="") llOwnerSay("Asking "+llGetUsername(avatarKey)+" for help");
-    else llOwnerSay("Asking "+(string)avatarKey+" for help");
+    if(llGetDisplayName(avatarKey)!="") llOwnerSay("Asking "+llGetDisplayName(avatarKey)+" for help.");
+    else llOwnerSay("Asking "+(string)avatarKey+" for help.");
     //if(DEBUG) llOwnerSay((string)avatarKey);
 }
 closeAsking()
@@ -465,7 +465,7 @@ default
         }
         else if(message=="Blacklisted")
         {
-            //if(DEBUG) llOwnerSay("Skipping blacklisted user "+llGetUsername(id));
+            //if(DEBUG) llOwnerSay("Skipping blacklisted user "+llGetDisplayName(id));
             avatarBlacklist+=id;
             llSensor("","",AGENT,20.0,PI);
         }
@@ -739,13 +739,13 @@ default
             {
                 llMessageLinked(LINK_ALL_OTHERS,0,"Safety!",safeKey);
                 llSleep(0.5);
-                llOwnerSay(llGetUsername(avatarKey)+" has released you");
+                llOwnerSay(llGetDisplayName(avatarKey)+" helped you out! <3");
                 avatarKey=NULL;
                 closeSafety();
             }
             else //If they said No
             {
-                llOwnerSay(llGetUsername(avatarKey)+" has denied your request to escape");
+                llOwnerSay(llGetDisplayName(avatarKey)+" didn't want to help you out. >: (");
                 llListenRemove(listener);
                 timeout=120; //You have to wait 2 minutes
                 lockoutSafetyDelay=120;
