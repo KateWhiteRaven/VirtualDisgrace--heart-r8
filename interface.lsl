@@ -957,7 +957,6 @@ default
     {
         init();
         post();
-        llOwnerSay("ℹ: [http://www.virtualdisgrace.com/relay Quick Guide]");
         //llOwnerSay("Memory Usage: "+(string)(llGetUsedMemory()/1024)+"kb");
     }
     on_rez(integer total)
@@ -979,6 +978,9 @@ default
     changed(integer change)
     {
         if(change & CHANGED_LINK) post();
-        if(change & CHANGED_OWNER) ownerKey=llGetOwner();
+        if(change & CHANGED_OWNER){
+            ownerKey=llGetOwner();
+            llOwnerSay("ℹ: [http://www.virtualdisgrace.com/relay Quick Guide]");
+        }
     }
 }
