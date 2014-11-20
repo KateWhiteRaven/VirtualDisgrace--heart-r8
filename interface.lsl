@@ -957,6 +957,7 @@ default
     {
         init();
         post();
+        llOwnerSay("ℹ: [http://www.virtualdisgrace.com/relay Quick Guide]");
         //llOwnerSay("Memory Usage: "+(string)(llGetUsedMemory()/1024)+"kb");
     }
     on_rez(integer total)
