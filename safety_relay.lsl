@@ -10,7 +10,7 @@
 
 //Constants
 
-string VERSION_IMPL="Turbo Safety 1.315 (VD GUI 1.2.1)"; // for !implversion
+string VERSION_IMPL="Turbo Safety 1.315 (VD GUI 1.2.2)"; // for !implversion
 string ORG_VERSION="!x-orgversions,ORG=0003/who=0002/mode=0000";
 integer VERSION_API=1100; // Version of RLV API
 integer MEMORY_LIMIT=61439; //Fine-tune to prevent Stackheap
