@@ -156,24 +156,24 @@ post()
     if(primSafety) llSetLinkColor(primSafety,YELLOW,ALL_SIDES);
     if(primMode) setMode(relayMode);
     else setMode(3);
-    if(primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
+    if(primL1) llSetLinkPrimitiveParamsFast(primL1,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
     if(primYes) llSetLinkColor(primYes,GREEN,ALL_SIDES);
     llSetLinkColor(primRoot,BLUE,ALL_SIDES);
-    if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
+    if(primAAL) llSetLinkPrimitiveParamsFast(primAAL,[PRIM_TEXTURE,ALL_SIDES,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",<1,1,0>,ZERO_VECTOR,0]);
     llSleep(0.1);
-    if(primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
+    if(primL2) llSetLinkPrimitiveParamsFast(primL2,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
     if(primNo) llSetLinkColor(primNo,RED,ALL_SIDES);
     llSleep(0.1);
-    if(primL3) llSetLinkTexture(primL3,LED_ON,ALL_SIDES);
+    if(primL3) llSetLinkPrimitiveParamsFast(primL3,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
     if(primQueue) llSetLinkColor(primQueue,VIOLET,ALL_SIDES);
     llSleep(0.8);
-    if(primL3) llSetLinkTexture(primL3,LED_OFF,ALL_SIDES);
+    if(primL3) llSetLinkPrimitiveParamsFast(primL3,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
     if(primQueue) llSetLinkColor(primQueue,DARK_VIOLET,ALL_SIDES);
     llSleep(0.1);
-    if(primL2) llSetLinkTexture(primL2,LED_OFF,ALL_SIDES);
+    if(primL2) llSetLinkPrimitiveParamsFast(primL2,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
     if(primNo) llSetLinkColor(primNo,BLANK,ALL_SIDES);
     llSleep(0.1);
-    if(primL1) llSetLinkTexture(primL1,LED_OFF,ALL_SIDES);
+    if(primL1) llSetLinkPrimitiveParamsFast(primL1,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
     if(primYes) llSetLinkColor(primYes,BLANK,ALL_SIDES);
     if(primLockout)
     {
@@ -186,7 +186,7 @@ post()
     }
     if(!power)
     {
-        if(primMode) llSetLinkTexture(primMode,"269545d5-5691-b916-18ff-b0248d2ae39f",ALL_SIDES);
+        if(primMode) llSetLinkPrimitiveParamsFast(primMode,[PRIM_TEXTURE,ALL_SIDES,"269545d5-5691-b916-18ff-b0248d2ae39f",<1,1,0>,ZERO_VECTOR,0]);
         llSetLinkColor(primRoot,BLANK,ALL_SIDES);
         if(primSafety) llSetLinkColor(primSafety,BLANK,ALL_SIDES);
     }
@@ -194,11 +194,11 @@ post()
     else llSetLinkColor(primRoot,BLANK,ALL_SIDES);
     if(attachmentsLocked)
     {
-        if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
+        if(primAAL) llSetLinkPrimitiveParamsFast(primAAL,[PRIM_TEXTURE,ALL_SIDES,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",<1,1,0>,ZERO_VECTOR,0]);
     }
     else
     {
-        if(primAAL) llSetLinkTexture(primAAL,"382ae69b-1ee2-3073-e54e-00354d71fe05",ALL_SIDES);
+        if(primAAL) llSetLinkPrimitiveParamsFast(primAAL,[PRIM_TEXTURE,ALL_SIDES,"382ae69b-1ee2-3073-e54e-00354d71fe05",<1,1,0>,ZERO_VECTOR,0]);
     }
     lockoutObjects=NULL_LIST;
 }
@@ -228,22 +228,22 @@ setMode(integer newMode)
     if(newMode>3) newMode=0;
     if(!newMode)
     {
-        llSetLinkTexture(primMode,"80741de3-c2a8-03ac-40a8-0801f92ca251",ALL_SIDES);
+        llSetLinkPrimitiveParamsFast(primMode,[PRIM_TEXTURE,ALL_SIDES,"80741de3-c2a8-03ac-40a8-0801f92ca251",<1,1,0>,ZERO_VECTOR,0]);
         Notify("Ask Mode");
     }
     else if(newMode==1)
     {
-        llSetLinkTexture(primMode,"6046abf0-9460-ad32-64ae-69f852680924",ALL_SIDES);
+        llSetLinkPrimitiveParamsFast(primMode,[PRIM_TEXTURE,ALL_SIDES,"6046abf0-9460-ad32-64ae-69f852680924",<1,1,0>,ZERO_VECTOR,0]);
         Notify("Lite Mode\n\n(Auto Force, Ask Restrictions)\n");
     }
     else if(newMode==2)
     {
-        llSetLinkTexture(primMode,"adc2cd56-d422-47c9-7d11-3bb601f9dfcf",ALL_SIDES);
+        llSetLinkPrimitiveParamsFast(primMode,[PRIM_TEXTURE,ALL_SIDES,"adc2cd56-d422-47c9-7d11-3bb601f9dfcf",<1,1,0>,ZERO_VECTOR,0]);
         Notify("Auto Mode\n\n(With Blacklist)\n");
     }
     else if(newMode==3)
     {
-        llSetLinkTexture(primMode,"f32086f6-8c84-55db-dbe2-0fb782b6cad7",ALL_SIDES);
+        llSetLinkPrimitiveParamsFast(primMode,[PRIM_TEXTURE,ALL_SIDES,"f32086f6-8c84-55db-dbe2-0fb782b6cad7",<1,1,0>,ZERO_VECTOR,0]);
         Notify("⚠ Risky Mode ⚠\n\n(NO Blacklist)\n");
     }
     relayMode=newMode;
@@ -273,7 +273,7 @@ lockAttachments()
     {
         llOwnerSay(llList2String(clothingLockList,x));
     }
-    if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
+    if(primAAL) llSetLinkPrimitiveParamsFast(primAAL,[PRIM_TEXTURE,ALL_SIDES,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",<1,1,0>,ZERO_VECTOR,0]);
     attachmentsLocked=1;
 }
 unlockAttachments()
@@ -281,7 +281,7 @@ unlockAttachments()
     llOwnerSay("@clear=remattach");
     llOwnerSay("@clear=remoutfit");
     llMessageLinked(LINK_ALL_OTHERS,0,"Refresh",WILDCARD);
-    if(primAAL) llSetLinkTexture(primAAL,"382ae69b-1ee2-3073-e54e-00354d71fe05",ALL_SIDES);
+    if(primAAL) llSetLinkPrimitiveParamsFast(primAAL,[PRIM_TEXTURE,ALL_SIDES,"382ae69b-1ee2-3073-e54e-00354d71fe05",<1,1,0>,ZERO_VECTOR,0]);
     attachmentsLocked=0;
     attachmentLockList=NULL_LIST;
     clothingLockList=NULL_LIST;
@@ -371,11 +371,11 @@ default
             lockoutSafetyDelay=0;    // ## Toy
             Notify("Relay Offline");
             power=0;
-            if(primL1) llSetLinkTexture(primL1,LED_OFF,ALL_SIDES);
-            if(primL2) llSetLinkTexture(primL2,LED_OFF,ALL_SIDES);
-            if(primL3) llSetLinkTexture(primL3,LED_OFF,ALL_SIDES);
+            if(primL1) llSetLinkPrimitiveParamsFast(primL1,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
+            if(primL2) llSetLinkPrimitiveParamsFast(primL2,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
+            if(primL3) llSetLinkPrimitiveParamsFast(primL3,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
             if(primSafety) llSetLinkColor(primSafety,BLANK,ALL_SIDES);
-            if(primMode) llSetLinkTexture(primMode,"269545d5-5691-b916-18ff-b0248d2ae39f",ALL_SIDES);
+            if(primMode) llSetLinkPrimitiveParamsFast(primMode,[PRIM_TEXTURE,ALL_SIDES,"269545d5-5691-b916-18ff-b0248d2ae39f",<1,1,0>,ZERO_VECTOR,0]);
             if(primYes) llSetLinkColor(primYes,BLANK,ALL_SIDES);
             if(primNo) llSetLinkColor(primNo,BLANK,ALL_SIDES);
             if(primLockout) llSetLinkColor(primLockout,DARK_RED,ALL_SIDES);
@@ -401,9 +401,9 @@ default
         {
             if(power) llSetLinkColor(primRoot,BLANK,ALL_SIDES);
             flashTimeout=2;
-            if(controllerCount>0 && primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
-            if(controllerCount>1 && primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
-            if(controllerCount>2 && primL3) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
+            if(controllerCount>0 && primL1) llSetLinkPrimitiveParamsFast(primL1,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
+            if(controllerCount>1 && primL2) llSetLinkPrimitiveParamsFast(primL2,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
+            if(controllerCount>2 && primL3) llSetLinkPrimitiveParamsFast(primL1,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
         }
         else if(message=="Asking")
         {
@@ -501,28 +501,28 @@ default
                 controllerCount=number;
                 if(!controllerCount)
                 {
-                    if(primL1) llSetLinkTexture(primL1,LED_OFF,ALL_SIDES);
-                    if(primL2) llSetLinkTexture(primL2,LED_OFF,ALL_SIDES);
-                    if(primL3) llSetLinkTexture(primL3,LED_OFF,ALL_SIDES);
+                    if(primL1) llSetLinkPrimitiveParamsFast(primL1,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
+                    if(primL2) llSetLinkPrimitiveParamsFast(primL2,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
+                    if(primL3) llSetLinkPrimitiveParamsFast(primL3,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
                     if(srsTimeout+timeout) closeSafety();
                 }
                 else if(controllerCount==1)
                 {
-                    if(primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
-                    if(primL2) llSetLinkTexture(primL2,LED_OFF,ALL_SIDES);
-                    if(primL3) llSetLinkTexture(primL3,LED_OFF,ALL_SIDES);
+                    if(primL1) llSetLinkPrimitiveParamsFast(primL1,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
+                    if(primL2) llSetLinkPrimitiveParamsFast(primL2,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
+                    if(primL3) llSetLinkPrimitiveParamsFast(primL3,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
                 }
                 else if(controllerCount==2)
                 {
-                    if(primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
-                    if(primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
-                    if(primL3) llSetLinkTexture(primL3,LED_OFF,ALL_SIDES);
+                    if(primL1) llSetLinkPrimitiveParamsFast(primL1,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
+                    if(primL2) llSetLinkPrimitiveParamsFast(primL2,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
+                    if(primL3) llSetLinkPrimitiveParamsFast(primL3,[PRIM_TEXTURE,ALL_SIDES,LED_OFF,<1,1,0>,ZERO_VECTOR,0]);
                 }
                 else if(controllerCount==3)
                 {
-                    if(primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
-                    if(primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
-                    if(primL3) llSetLinkTexture(primL3,LED_ON,ALL_SIDES);
+                    if(primL1) llSetLinkPrimitiveParamsFast(primL1,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
+                    if(primL2) llSetLinkPrimitiveParamsFast(primL2,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
+                    if(primL3) llSetLinkPrimitiveParamsFast(primL3,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
                 }
                 object1Key=llList2Key(temp,1);
                 object2Key=llList2Key(temp,2);
@@ -781,7 +781,7 @@ default
                 Notify("Attachments Locked On");
                 //Notify("memory Used: "+(string)(llGetUsedMemory()/1024)+"kb");
                 attachmentStage=0;
-                if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
+                if(primAAL) llSetLinkPrimitiveParamsFast(primAAL,[PRIM_TEXTURE,ALL_SIDES,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",<1,1,0>,ZERO_VECTOR,0]);
             }
             else if(attachmentStage==1)
             {
@@ -944,9 +944,9 @@ default
         }
         if(flashTimeout==1)
         {
-            if(controllerCount>0 && primL1) llSetLinkTexture(primL1,LED_ON,ALL_SIDES);
-            if(controllerCount>1 && primL2) llSetLinkTexture(primL2,LED_ON,ALL_SIDES);
-            if(controllerCount>2 && primL3) llSetLinkTexture(primL3,LED_ON,ALL_SIDES);
+            if(controllerCount>0 && primL1) llSetLinkPrimitiveParamsFast(primL1,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
+            if(controllerCount>1 && primL2) llSetLinkPrimitiveParamsFast(primL2,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
+            if(controllerCount>2 && primL3) llSetLinkPrimitiveParamsFast(primL3,[PRIM_TEXTURE,ALL_SIDES,LED_ON,<1,1,0>,ZERO_VECTOR,0]);
         }
         if(flashTimeout) flashTimeout--;
         if(srsTimeout==1) closeSafety();
