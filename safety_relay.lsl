@@ -9,7 +9,7 @@
 
 //Constants
 
-string VERSION_IMPL="Heart R8 (1.315/1.2.5)"; // for !implversion
+string VERSION_IMPL="Heart R8 (1.2.7)"; // for !implversion
 string ORG_VERSION="!x-orgversions,ORG=0003/who=0002/mode=0000";
 integer VERSION_API=1100; // Version of RLV API
 integer MEMORY_LIMIT=61439; //Fine-tune to prevent Stackheap
