@@ -1,7 +1,6 @@
 //Interface Script by Da Chrome and Toy Wylie is licensed under a Creative Commons Attribution 3.0 Unported License. http://creativecommons.org/licenses/by/3.0/ Keep This Line Intact.
 // The artwork by Virtual Disgrace™ for the graphical user interface is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 // http://creativecommons.org/licenses/by-nc-sa/4.0/
-// For creating "closed source" derivatives, please use the original Turbo Safety RLV Relay as code base.
 // Supports 3 objects max
 
 // Constants
@@ -78,8 +77,15 @@ integer permissionGranted;
 integer lastSlot;
 //integer SAFETY_DELAY_TIME=120; // Hardcoded ## Da
 integer lockoutSafetyDelay=0;    // ## Toy
+string g_sObjectName;
+Notify(string sTxt) {
+    llSetObjectName("Heart R8");
+    llOwnerSay(sTxt);
+    llSetObjectName(g_sObjectName);
+}
 init()
 {
+    g_sObjectName = llGetObjectName();
     ownerKey=llGetOwner();
     permissionGranted=0;
     llSetTimerEvent(1.0);
@@ -89,7 +95,7 @@ init()
         if(lastSlot!=slot)
         {
             lastSlot=slot;
-            //llSetRot(llEuler2Rot(<0.0,270.0,260.0>*DEG_TO_RAD));
+            llSetLinkPrimitiveParamsFast(1,[PRIM_ROT_LOCAL ,llEuler2Rot(<0.0,270.0,270.0>*DEG_TO_RAD)]);
             if(slot==ATTACH_HUD_CENTER_2) llSetPos(<0.0,0.0,0.0>);
             else if(slot==ATTACH_HUD_TOP_RIGHT) llSetPos(<0.0,0.15,-0.15>);
             else if(slot==ATTACH_HUD_TOP_CENTER) llSetPos(<0.0,0.0,-0.15>);
@@ -113,7 +119,7 @@ init()
         }
         else
         {
-            llOwnerSay("Please Attach to HUD only!");
+            Notify("Please Attach to HUD only!");
             detachMe=1;
         }
     }
@@ -204,8 +210,8 @@ askSafety(key ids)
     if(safeKey==WILDCARD) message+="\n"+llGetDisplayName(ownerKey)+" seems to be in trouble.\n\nWill you help them out?";
     else message+="\n"+llGetDisplayName(ownerKey)+" needs your help to escape from "+llKey2Name(safeKey)+".\n\nWill you lend them a hand?";
     llDialog(avatarKey,message,["Yes","No"],181917); //Give them a Yes/No menu
-    if(llGetDisplayName(avatarKey)!="") llOwnerSay("Asking "+llGetDisplayName(avatarKey)+" for help.");
-    else llOwnerSay("Asking "+(string)avatarKey+" for help.");
+    if(llGetDisplayName(avatarKey)!="") Notify("Asking "+llGetDisplayName(avatarKey)+" for help.");
+    else Notify("Asking "+(string)avatarKey+" for help.");
     //if(DEBUG) llOwnerSay((string)avatarKey);
 }
 closeAsking()
@@ -223,22 +229,22 @@ setMode(integer newMode)
     if(!newMode)
     {
         llSetLinkTexture(primMode,"80741de3-c2a8-03ac-40a8-0801f92ca251",ALL_SIDES);
-        llOwnerSay("Ask Mode");
+        Notify("Ask Mode");
     }
     else if(newMode==1)
     {
         llSetLinkTexture(primMode,"6046abf0-9460-ad32-64ae-69f852680924",ALL_SIDES);
-        llOwnerSay("Lite Mode\n\n(Auto Force, Ask Restrictions)\n");
+        Notify("Lite Mode\n\n(Auto Force, Ask Restrictions)\n");
     }
     else if(newMode==2)
     {
         llSetLinkTexture(primMode,"adc2cd56-d422-47c9-7d11-3bb601f9dfcf",ALL_SIDES);
-        llOwnerSay("Auto Mode\n\n(With Blacklist)\n");
+        Notify("Auto Mode\n\n(With Blacklist)\n");
     }
     else if(newMode==3)
     {
         llSetLinkTexture(primMode,"f32086f6-8c84-55db-dbe2-0fb782b6cad7",ALL_SIDES);
-        llOwnerSay("⚠ Risky Mode ⚠\n\n(NO Blacklist)\n");
+        Notify("⚠ Risky Mode ⚠\n\n(NO Blacklist)\n");
     }
     relayMode=newMode;
     llMessageLinked(LINK_ALL_OTHERS,relayMode,"SetMode",NULL);
@@ -281,7 +287,7 @@ unlockAttachments()
     clothingLockList=NULL_LIST;
     attachmentStage=0;
     attachmentTimeout=0;
-    llOwnerSay("Attachments Unlocked");
+    Notify("Attachments Unlocked");
 }
 forceDetach()
 {
@@ -298,7 +304,7 @@ activateSafety() //Activates the Safety System
         if(superSafety)
         {
             llMessageLinked(LINK_ALL_OTHERS,0,"Safety!",safeKey);
-            llOwnerSay("You are free to go");
+            Notify("You are free to go");
             closeSafety();
         }
         else
@@ -313,12 +319,12 @@ activateSafety() //Activates the Safety System
         if(superSafety!=1)
         {
             superSafety=1;
-            llOwnerSay("Immediate Safeword Mode");
+            Notify("Immediate Safeword Mode");
         }
         else
         {
             superSafety=0;
-            llOwnerSay("Evil Safeword Mode");
+            Notify("Evil Safeword Mode");
         }
         setSafetyColor();
     }
@@ -363,7 +369,7 @@ default
         if(message=="PowerOff")
         {
             lockoutSafetyDelay=0;    // ## Toy
-            llOwnerSay("Relay Offline");
+            Notify("Relay Offline");
             power=0;
             if(primL1) llSetLinkTexture(primL1,LED_OFF,ALL_SIDES);
             if(primL2) llSetLinkTexture(primL2,LED_OFF,ALL_SIDES);
@@ -472,7 +478,7 @@ default
             llSensor("","",AGENT,20.0,PI);
         }
         else if(message=="NotBlacklisted") askSafety(id);
-        else if(id=="Message") llOwnerSay(message);
+        else if(id=="Message") Notify(message);
         else
         {
             list temp=llCSV2List(message);
@@ -566,7 +572,7 @@ default
                         lockoutObjects+=object1Key;
                         lockoutTimeout=0;
                         llSetLinkColor(primLockout,RED,ALL_SIDES);
-                        llOwnerSay(llKey2Name(object1Key)+" is now locked out from safeword.");
+                        Notify(llKey2Name(object1Key)+" is now locked out from safeword.");
                     }
                     else
                     {
@@ -584,7 +590,7 @@ default
                         lockoutObjects+=object2Key;
                         lockoutTimeout=0;
                         llSetLinkColor(primLockout,RED,ALL_SIDES);
-                        llOwnerSay(llKey2Name(object2Key)+" is now locked out from safeword.");
+                        Notify(llKey2Name(object2Key)+" is now locked out from safeword.");
                     }
                     else
                     {
@@ -602,7 +608,7 @@ default
                         lockoutObjects+=object3Key;
                         lockoutTimeout=0;
                         llSetLinkColor(primLockout,RED,ALL_SIDES);
-                        llOwnerSay(llKey2Name(object3Key)+" is now locked out from safeword.");
+                        Notify(llKey2Name(object3Key)+" is now locked out from safeword.");
                     }
                     else
                     {
@@ -630,7 +636,7 @@ default
                         lockoutGlobal=0;
                         lockoutObjects=NULL_LIST;
                         llSetLinkColor(primLockout,DARK_RED,ALL_SIDES);
-                        llOwnerSay("Safeword Enabled");
+                        Notify("Safeword Enabled");
                     }
                 }
                 else lockoutTimeout=1;
@@ -679,7 +685,7 @@ default
         else if(llDetectedLinkNumber(0)==primRoot)
         {
             llMessageLinked(LINK_ALL_OTHERS,1,"PowerOn",NULL);
-            llOwnerSay("Starting Relay");
+            Notify("Starting Relay");
         }
     }
     touch_end(integer total)
@@ -693,17 +699,17 @@ default
         {
             if(buttonHeld==primL1)
             {
-                llOwnerSay(llKey2Name(object1Key));
+                Notify(llKey2Name(object1Key));
                 holdTimeout=0;
             }
             else if(buttonHeld==primL2)
             {
-                llOwnerSay(llKey2Name(object2Key));
+                Notify(llKey2Name(object2Key));
                 holdTimeout=0;
             }
             else if(buttonHeld==primL3)
             {
-                llOwnerSay(llKey2Name(object3Key));
+                Notify(llKey2Name(object3Key));
                 holdTimeout=0;
             }
             else if(buttonHeld==primLockout)
@@ -712,7 +718,7 @@ default
                 if(controllerCount>0)
                 {
                     lockoutTimeout=11;
-                    llOwnerSay("Tap the Active Controller you want to Lockout Safeword on");
+                    Notify("Tap the Active Controller you want to Lockout Safeword on");
                 }
                 else
                 {
@@ -725,7 +731,7 @@ default
                 if(power) llSetLinkColor(primRoot,BLANK,ALL_SIDES);
                 if(controllerCount)
                 {
-                    llOwnerSay("Interface Memory Usage: "+(string)(llGetUsedMemory()/1024)+"kb");
+                    Notify("Interface Memory Usage: "+(string)(llGetUsedMemory()/1024)+"kb");
                     llMessageLinked(LINK_ALL_OTHERS,0,"Status",NULL);
                 }
                 holdTimeout=0;
@@ -741,13 +747,13 @@ default
             {
                 llMessageLinked(LINK_ALL_OTHERS,0,"Safety!",safeKey);
                 llSleep(0.5);
-                llOwnerSay(llGetDisplayName(avatarKey)+" helped you out! <3");
+                Notify(llGetDisplayName(avatarKey)+" helped you out! <3");
                 avatarKey=NULL;
                 closeSafety();
             }
             else //If they said No
             {
-                llOwnerSay(llGetDisplayName(avatarKey)+" didn't want to help you out. >: (");
+                Notify(llGetDisplayName(avatarKey)+" didn't want to help you out. >: (");
                 llListenRemove(listener);
                 timeout=120; //You have to wait 2 minutes
                 lockoutSafetyDelay=120;
@@ -772,8 +778,8 @@ default
                 }
                 x=0;
                 lockAttachments();
-                llOwnerSay("Attachments Locked On");
-                //llOwnerSay("memory Used: "+(string)(llGetUsedMemory()/1024)+"kb");
+                Notify("Attachments Locked On");
+                //Notify("memory Used: "+(string)(llGetUsedMemory()/1024)+"kb");
                 attachmentStage=0;
                 if(primAAL) llSetLinkTexture(primAAL,"dbde5431-812b-5fbc-bb6c-e97bf804bf69",ALL_SIDES);
             }
@@ -851,14 +857,14 @@ default
         else //If everyone nearby is Busy or Away
         { //Lets the user go via Safeword
             llMessageLinked(LINK_ALL_OTHERS,0,"Safety!",safeKey);
-            llOwnerSay("You are free to go since no one is paying attention");
+            Notify("You are free to go since no one is paying attention");
             closeSafety();
         }
     }
     no_sensor() //If no one is nearby...
     {
         llMessageLinked(LINK_ALL_OTHERS,0,"Safety!",safeKey);
-        llOwnerSay("You are free to go since no one is here");
+        Notify("You are free to go since no one is here");
         closeSafety();
     }
     timer()
@@ -880,13 +886,13 @@ default
                         lockoutTimer=0;
                         lockoutGlobal=1;
                         llSetLinkColor(primLockout,RED,ALL_SIDES);
-                        llOwnerSay(" /!\\ Safeword Disabled /!\\ ");
+                        Notify(" /!\\ Safeword Disabled /!\\ ");
                     }
                     else if(lockoutTimer+lockoutGlobal==0)
                     {
                         lockoutTimer=1;
                         llSetLinkColor(primLockout,ORANGE,ALL_SIDES);
-                        llOwnerSay("2 Minute Safeword Lockout Enabled");
+                        Notify("2 Minute Safeword Lockout Enabled");
                     }
                 }
                 else
@@ -895,21 +901,21 @@ default
                     {
                         if(buttonHeld==primL1 && llListFindList(lockoutObjects,[object1Key])==-1)
                         {
-                            llOwnerSay("Ready to activate SRS on "+llKey2Name(object1Key));
+                            Notify("Ready to activate SRS on "+llKey2Name(object1Key));
                             safeKey=object1Key;
                             srsTimeout=11;
                             llSetLinkColor(primSafety,RED,ALL_SIDES);
                         }
                         else if(buttonHeld==primL2 && llListFindList(lockoutObjects,[object2Key])==-1)
                         {
-                            llOwnerSay("Ready to activate SRS on "+llKey2Name(object2Key));
+                            Notify("Ready to activate SRS on "+llKey2Name(object2Key));
                             safeKey=object2Key;
                             srsTimeout=11;
                             llSetLinkColor(primSafety,RED,ALL_SIDES);
                         }
                         else if(buttonHeld==primL3 && llListFindList(lockoutObjects,[object3Key])==-1)
                         {
-                            llOwnerSay("Ready to activate SRS on "+llKey2Name(object3Key));
+                            Notify("Ready to activate SRS on "+llKey2Name(object3Key));
                             safeKey=object3Key;
                             srsTimeout=11;
                             llSetLinkColor(primSafety,RED,ALL_SIDES);
@@ -980,7 +986,7 @@ default
         if(change & CHANGED_LINK) post();
         if(change & CHANGED_OWNER){
             ownerKey=llGetOwner();
-            llOwnerSay("ℹ: [http://www.virtualdisgrace.com/relay Quick Guide]");
+            Notify("If you are wearing me for the first time, please take a moment to read [http://www.opencollar.at/relay.html my manual page.]");
         }
     }
 }

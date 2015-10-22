@@ -1,7 +1,6 @@
 // Queue Script by Da Chrome and Toy Wylie is licensed under a Creative Commons Attribution 3.0 Unported License. http://creativecommons.org/licenses/by/3.0/ Keep This Line Intact.
 // The artwork by Virtual Disgrace™ for the graphical user interface is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 // http://creativecommons.org/licenses/by-nc-sa/4.0/
-// For creating "closed source" derivatives, please use the original Turbo Safety RLV Relay as code base.
 // Queue Script, with ORG-compatible !who handling
 // and Blacklisting System, with database lookup of names
 // Experimental ORG support commented out in this version
@@ -16,7 +15,7 @@ integer MEMORY_LIMIT=61439; //Fine-tune to prevent Stackheap
 integer PIN=-5875279; // Auto updater PIN (WIP)
 list RLV_PARSE=["|"]; // Speeds up Parsing a little
 key MESSAGE="Message";
-string MANPAGE="\n[http://www.virtualdisgrace.com/relay Virtual Disgrace - Relay]";
+string MANPAGE="\n[http://www.opencollar.at/relay.html The Heart R8 Relay]";
 //integer DEBUG=1; // Uncomment this and all //if(DEBUG) lines to enable debugging
 
 // Variables
