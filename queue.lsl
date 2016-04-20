@@ -15,7 +15,7 @@ integer MEMORY_LIMIT=61439; //Fine-tune to prevent Stackheap
 integer PIN=-5875279; // Auto updater PIN (WIP)
 list RLV_PARSE=["|"]; // Speeds up Parsing a little
 key MESSAGE="Message";
-string MANPAGE="\n[http://www.opencollar.at/relay.html The Heart R8 RLV Relay]\t¹⋅²⋅⁷";
+string MANPAGE="\n[http://www.opencollar.at/heart-r8.html The Heart R8 RLV Relay]\t¹⋅²⋅⁸";
 //integer DEBUG=1; // Uncomment this and all //if(DEBUG) lines to enable debugging
 
 // Variables

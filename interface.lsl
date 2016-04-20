@@ -985,7 +985,7 @@ default
         if(change & CHANGED_LINK) post();
         if(change & CHANGED_OWNER){
             ownerKey=llGetOwner();
-            llOwnerSay("\n\nIf you are wearing me for the first time, please take a moment to read [http://www.opencollar.at/relay.html my manual page.]\n");
+            llOwnerSay("\n\nIf you are wearing me for the first time, please take a moment to read [http://www.opencollar.at/heart-r8.html my manual page.]\n");
         }
     }
 }
